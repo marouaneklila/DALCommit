@@ -1,0 +1,15 @@
+C:\Projects\DAL\bin\Debug\DAL.dll.config
+C:\Projects\DAL\bin\Debug\DAL.dll
+C:\Projects\DAL\bin\Debug\DAL.pdb
+C:\Projects\DAL\bin\Debug\EntityFramework.dll
+C:\Projects\DAL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Projects\DAL\bin\Debug\Microsoft.Analytics.Interfaces.dll
+C:\Projects\DAL\bin\Debug\Microsoft.Analytics.Interfaces.Streaming.dll
+C:\Projects\DAL\bin\Debug\Microsoft.Analytics.Types.dll
+C:\Projects\DAL\bin\Debug\EntityFramework.xml
+C:\Projects\DAL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Projects\DAL\bin\Debug\fr\EntityFramework.resources.dll
+C:\Projects\DAL\obj\Debug\DAL.csprojAssemblyReference.cache
+C:\Projects\DAL\obj\Debug\DAL.csproj.CopyComplete
+C:\Projects\DAL\obj\Debug\DAL.dll
+C:\Projects\DAL\obj\Debug\DAL.pdb

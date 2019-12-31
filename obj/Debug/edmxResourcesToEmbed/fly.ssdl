@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="flyapp_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="aeroport">
+    <Key>
+      <PropertyRef Name="Id_aero" />
+    </Key>
+    <Property Name="Id_aero" Type="int" Nullable="false" />
+    <Property Name="ville" Type="nchar" MaxLength="10" />
+    <Property Name="latitude" Type="int" />
+    <Property Name="latideg" Type="int" />
+    <Property Name="latidirection" Type="nchar" MaxLength="10" />
+    <Property Name="longtitude" Type="int" />
+    <Property Name="longdeg" Type="int" />
+    <Property Name="longdirection" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="avion">
+    <Key>
+      <PropertyRef Name="Id_avion" />
+    </Key>
+    <Property Name="Id_avion" Type="int" Nullable="false" />
+    <Property Name="consommation" Type="int" />
+    <Property Name="quantite_kero" Type="nchar" MaxLength="10" />
+    <Property Name="description" Type="nchar" MaxLength="80" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id_user" />
+    </Key>
+    <Property Name="Id_user" Type="int" Nullable="false" />
+    <Property Name="nom" Type="nchar" MaxLength="15" />
+    <Property Name="prenom" Type="nchar" MaxLength="10" />
+    <Property Name="adresse" Type="nchar" MaxLength="30" />
+    <Property Name="cin" Type="nchar" MaxLength="8" />
+  </EntityType>
+  <EntityType Name="vols">
+    <Key>
+      <PropertyRef Name="Id_vols" />
+    </Key>
+    <Property Name="Id_vols" Type="int" Nullable="false" />
+    <Property Name="id_avion" Type="int" />
+    <Property Name="id_user" Type="int" />
+    <Property Name="id_aero_dep" Type="int" />
+    <Property Name="id_aero_arri" Type="int" />
+    <Property Name="description" Type="nchar" MaxLength="80" />
+  </EntityType>
+  <Association Name="FK_vols_aeroport_arri">
+    <End Role="aeroport" Type="Self.aeroport" Multiplicity="0..1" />
+    <End Role="vols" Type="Self.vols" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aeroport">
+        <PropertyRef Name="Id_aero" />
+      </Principal>
+      <Dependent Role="vols">
+        <PropertyRef Name="id_aero_arri" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vols_aeroport_dep">
+    <End Role="aeroport" Type="Self.aeroport" Multiplicity="0..1" />
+    <End Role="vols" Type="Self.vols" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aeroport">
+        <PropertyRef Name="Id_aero" />
+      </Principal>
+      <Dependent Role="vols">
+        <PropertyRef Name="id_aero_dep" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vols_avion">
+    <End Role="avion" Type="Self.avion" Multiplicity="0..1" />
+    <End Role="vols" Type="Self.vols" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="avion">
+        <PropertyRef Name="Id_avion" />
+      </Principal>
+      <Dependent Role="vols">
+        <PropertyRef Name="id_avion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vols_user">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="vols" Type="Self.vols" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id_user" />
+      </Principal>
+      <Dependent Role="vols">
+        <PropertyRef Name="id_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="flyapp_DBModelStoreContainer">
+    <EntitySet Name="aeroport" EntityType="Self.aeroport" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="avion" EntityType="Self.avion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="vols" EntityType="Self.vols" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_vols_aeroport_arri" Association="Self.FK_vols_aeroport_arri">
+      <End Role="aeroport" EntitySet="aeroport" />
+      <End Role="vols" EntitySet="vols" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vols_aeroport_dep" Association="Self.FK_vols_aeroport_dep">
+      <End Role="aeroport" EntitySet="aeroport" />
+      <End Role="vols" EntitySet="vols" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vols_avion" Association="Self.FK_vols_avion">
+      <End Role="avion" EntitySet="avion" />
+      <End Role="vols" EntitySet="vols" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vols_user" Association="Self.FK_vols_user">
+      <End Role="User" EntitySet="User" />
+      <End Role="vols" EntitySet="vols" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

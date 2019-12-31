@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="flyapp_DBModelStoreContainer" CdmEntityContainer="flyapp_DBEntities">
+    <EntitySetMapping Name="aeroport">
+      <EntityTypeMapping TypeName="flyapp_DBModel.aeroport">
+        <MappingFragment StoreEntitySet="aeroport">
+          <ScalarProperty Name="Id_aero" ColumnName="Id_aero" />
+          <ScalarProperty Name="ville" ColumnName="ville" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="latideg" ColumnName="latideg" />
+          <ScalarProperty Name="latidirection" ColumnName="latidirection" />
+          <ScalarProperty Name="longtitude" ColumnName="longtitude" />
+          <ScalarProperty Name="longdeg" ColumnName="longdeg" />
+          <ScalarProperty Name="longdirection" ColumnName="longdirection" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="avion">
+      <EntityTypeMapping TypeName="flyapp_DBModel.avion">
+        <MappingFragment StoreEntitySet="avion">
+          <ScalarProperty Name="Id_avion" ColumnName="Id_avion" />
+          <ScalarProperty Name="consommation" ColumnName="consommation" />
+          <ScalarProperty Name="quantite_kero" ColumnName="quantite_kero" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="flyapp_DBModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="Id_user" ColumnName="Id_user" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+          <ScalarProperty Name="prenom" ColumnName="prenom" />
+          <ScalarProperty Name="adresse" ColumnName="adresse" />
+          <ScalarProperty Name="cin" ColumnName="cin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vols">
+      <EntityTypeMapping TypeName="flyapp_DBModel.vols">
+        <MappingFragment StoreEntitySet="vols">
+          <ScalarProperty Name="Id_vols" ColumnName="Id_vols" />
+          <ScalarProperty Name="id_avion" ColumnName="id_avion" />
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <ScalarProperty Name="id_aero_dep" ColumnName="id_aero_dep" />
+          <ScalarProperty Name="id_aero_arri" ColumnName="id_aero_arri" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="flyapp_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="aeroport">
+    <Key>
+      <PropertyRef Name="Id_aero" />
+    </Key>
+    <Property Name="Id_aero" Type="Int32" Nullable="false" />
+    <Property Name="ville" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="latitude" Type="Int32" />
+    <Property Name="latideg" Type="Int32" />
+    <Property Name="latidirection" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="longtitude" Type="Int32" />
+    <Property Name="longdeg" Type="Int32" />
+    <Property Name="longdirection" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <NavigationProperty Name="vols" Relationship="Self.FK_vols_aeroport_arri" FromRole="aeroport" ToRole="vols" />
+    <NavigationProperty Name="vols1" Relationship="Self.FK_vols_aeroport_dep" FromRole="aeroport" ToRole="vols" />
+  </EntityType>
+  <EntityType Name="avion">
+    <Key>
+      <PropertyRef Name="Id_avion" />
+    </Key>
+    <Property Name="Id_avion" Type="Int32" Nullable="false" />
+    <Property Name="consommation" Type="Int32" />
+    <Property Name="quantite_kero" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="description" Type="String" MaxLength="80" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="vols" Relationship="Self.FK_vols_avion" FromRole="avion" ToRole="vols" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id_user" />
+    </Key>
+    <Property Name="Id_user" Type="Int32" Nullable="false" />
+    <Property Name="nom" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="prenom" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="adresse" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+    <Property Name="cin" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="vols" Relationship="Self.FK_vols_user" FromRole="User" ToRole="vols" />
+  </EntityType>
+  <EntityType Name="vols">
+    <Key>
+      <PropertyRef Name="Id_vols" />
+    </Key>
+    <Property Name="Id_vols" Type="Int32" Nullable="false" />
+    <Property Name="id_avion" Type="Int32" />
+    <Property Name="id_user" Type="Int32" />
+    <Property Name="id_aero_dep" Type="Int32" />
+    <Property Name="id_aero_arri" Type="Int32" />
+    <Property Name="description" Type="String" MaxLength="80" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="aeroport" Relationship="Self.FK_vols_aeroport_arri" FromRole="vols" ToRole="aeroport" />
+    <NavigationProperty Name="aeroport1" Relationship="Self.FK_vols_aeroport_dep" FromRole="vols" ToRole="aeroport" />
+    <NavigationProperty Name="avion" Relationship="Self.FK_vols_avion" FromRole="vols" ToRole="avion" />
+    <NavigationProperty Name="User" Relationship="Self.FK_vols_user" FromRole="vols" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_vols_aeroport_arri">
+    <End Role="aeroport" Type="Self.aeroport" Multiplicity="0..1" />
+    <End Role="vols" Type="Self.vols" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aeroport">
+        <PropertyRef Name="Id_aero" />
+      </Principal>
+      <Dependent Role="vols">
+        <PropertyRef Name="id_aero_arri" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vols_aeroport_dep">
+    <End Role="aeroport" Type="Self.aeroport" Multiplicity="0..1" />
+    <End Role="vols" Type="Self.vols" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="aeroport">
+        <PropertyRef Name="Id_aero" />
+      </Principal>
+      <Dependent Role="vols">
+        <PropertyRef Name="id_aero_dep" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vols_avion">
+    <End Role="avion" Type="Self.avion" Multiplicity="0..1" />
+    <End Role="vols" Type="Self.vols" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="avion">
+        <PropertyRef Name="Id_avion" />
+      </Principal>
+      <Dependent Role="vols">
+        <PropertyRef Name="id_avion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vols_user">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="vols" Type="Self.vols" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id_user" />
+      </Principal>
+      <Dependent Role="vols">
+        <PropertyRef Name="id_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="flyapp_DBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="aeroport" EntityType="Self.aeroport" />
+    <EntitySet Name="avion" EntityType="Self.avion" />
+    <EntitySet Name="User" EntityType="Self.User" />
+    <EntitySet Name="vols" EntityType="Self.vols" />
+    <AssociationSet Name="FK_vols_aeroport_arri" Association="Self.FK_vols_aeroport_arri">
+      <End Role="aeroport" EntitySet="aeroport" />
+      <End Role="vols" EntitySet="vols" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vols_aeroport_dep" Association="Self.FK_vols_aeroport_dep">
+      <End Role="aeroport" EntitySet="aeroport" />
+      <End Role="vols" EntitySet="vols" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vols_avion" Association="Self.FK_vols_avion">
+      <End Role="avion" EntitySet="avion" />
+      <End Role="vols" EntitySet="vols" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vols_user" Association="Self.FK_vols_user">
+      <End Role="User" EntitySet="User" />
+      <End Role="vols" EntitySet="vols" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

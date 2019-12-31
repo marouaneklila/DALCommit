@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="flyapp_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="aeroport">
+          <Key>
+            <PropertyRef Name="Id_aero" />
+          </Key>
+          <Property Name="Id_aero" Type="int" Nullable="false" />
+          <Property Name="ville" Type="nchar" MaxLength="10" />
+          <Property Name="latitude" Type="int" />
+          <Property Name="latideg" Type="int" />
+          <Property Name="latidirection" Type="nchar" MaxLength="10" />
+          <Property Name="longtitude" Type="int" />
+          <Property Name="longdeg" Type="int" />
+          <Property Name="longdirection" Type="char" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="avion">
+          <Key>
+            <PropertyRef Name="Id_avion" />
+          </Key>
+          <Property Name="Id_avion" Type="int" Nullable="false" />
+          <Property Name="consommation" Type="int" />
+          <Property Name="quantite_kero" Type="nchar" MaxLength="10" />
+          <Property Name="description" Type="nchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id_user" />
+          </Key>
+          <Property Name="Id_user" Type="int" Nullable="false" />
+          <Property Name="nom" Type="nchar" MaxLength="15" />
+          <Property Name="prenom" Type="nchar" MaxLength="10" />
+          <Property Name="adresse" Type="nchar" MaxLength="30" />
+          <Property Name="cin" Type="nchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="vols">
+          <Key>
+            <PropertyRef Name="Id_vols" />
+          </Key>
+          <Property Name="Id_vols" Type="int" Nullable="false" />
+          <Property Name="id_avion" Type="int" />
+          <Property Name="id_user" Type="int" />
+          <Property Name="id_aero_dep" Type="int" />
+          <Property Name="id_aero_arri" Type="int" />
+          <Property Name="description" Type="nchar" MaxLength="80" />
+        </EntityType>
+        <Association Name="FK_vols_aeroport_arri">
+          <End Role="aeroport" Type="Self.aeroport" Multiplicity="0..1" />
+          <End Role="vols" Type="Self.vols" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aeroport">
+              <PropertyRef Name="Id_aero" />
+            </Principal>
+            <Dependent Role="vols">
+              <PropertyRef Name="id_aero_arri" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vols_aeroport_dep">
+          <End Role="aeroport" Type="Self.aeroport" Multiplicity="0..1" />
+          <End Role="vols" Type="Self.vols" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aeroport">
+              <PropertyRef Name="Id_aero" />
+            </Principal>
+            <Dependent Role="vols">
+              <PropertyRef Name="id_aero_dep" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vols_avion">
+          <End Role="avion" Type="Self.avion" Multiplicity="0..1" />
+          <End Role="vols" Type="Self.vols" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="avion">
+              <PropertyRef Name="Id_avion" />
+            </Principal>
+            <Dependent Role="vols">
+              <PropertyRef Name="id_avion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vols_user">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="vols" Type="Self.vols" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id_user" />
+            </Principal>
+            <Dependent Role="vols">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="flyapp_DBModelStoreContainer">
+          <EntitySet Name="aeroport" EntityType="Self.aeroport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="avion" EntityType="Self.avion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="vols" EntityType="Self.vols" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_vols_aeroport_arri" Association="Self.FK_vols_aeroport_arri">
+            <End Role="aeroport" EntitySet="aeroport" />
+            <End Role="vols" EntitySet="vols" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vols_aeroport_dep" Association="Self.FK_vols_aeroport_dep">
+            <End Role="aeroport" EntitySet="aeroport" />
+            <End Role="vols" EntitySet="vols" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vols_avion" Association="Self.FK_vols_avion">
+            <End Role="avion" EntitySet="avion" />
+            <End Role="vols" EntitySet="vols" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vols_user" Association="Self.FK_vols_user">
+            <End Role="User" EntitySet="User" />
+            <End Role="vols" EntitySet="vols" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="flyapp_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="aeroport">
+          <Key>
+            <PropertyRef Name="Id_aero" />
+          </Key>
+          <Property Name="Id_aero" Type="Int32" Nullable="false" />
+          <Property Name="ville" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="latitude" Type="Int32" />
+          <Property Name="latideg" Type="Int32" />
+          <Property Name="latidirection" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="longtitude" Type="Int32" />
+          <Property Name="longdeg" Type="Int32" />
+          <Property Name="longdirection" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <NavigationProperty Name="vols" Relationship="Self.FK_vols_aeroport_arri" FromRole="aeroport" ToRole="vols" />
+          <NavigationProperty Name="vols1" Relationship="Self.FK_vols_aeroport_dep" FromRole="aeroport" ToRole="vols" />
+        </EntityType>
+        <EntityType Name="avion">
+          <Key>
+            <PropertyRef Name="Id_avion" />
+          </Key>
+          <Property Name="Id_avion" Type="Int32" Nullable="false" />
+          <Property Name="consommation" Type="Int32" />
+          <Property Name="quantite_kero" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="80" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="vols" Relationship="Self.FK_vols_avion" FromRole="avion" ToRole="vols" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id_user" />
+          </Key>
+          <Property Name="Id_user" Type="Int32" Nullable="false" />
+          <Property Name="nom" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="prenom" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="adresse" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="cin" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="vols" Relationship="Self.FK_vols_user" FromRole="User" ToRole="vols" />
+        </EntityType>
+        <EntityType Name="vols">
+          <Key>
+            <PropertyRef Name="Id_vols" />
+          </Key>
+          <Property Name="Id_vols" Type="Int32" Nullable="false" />
+          <Property Name="id_avion" Type="Int32" />
+          <Property Name="id_user" Type="Int32" />
+          <Property Name="id_aero_dep" Type="Int32" />
+          <Property Name="id_aero_arri" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="80" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="aeroport" Relationship="Self.FK_vols_aeroport_arri" FromRole="vols" ToRole="aeroport" />
+          <NavigationProperty Name="aeroport1" Relationship="Self.FK_vols_aeroport_dep" FromRole="vols" ToRole="aeroport" />
+          <NavigationProperty Name="avion" Relationship="Self.FK_vols_avion" FromRole="vols" ToRole="avion" />
+          <NavigationProperty Name="User" Relationship="Self.FK_vols_user" FromRole="vols" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_vols_aeroport_arri">
+          <End Role="aeroport" Type="Self.aeroport" Multiplicity="0..1" />
+          <End Role="vols" Type="Self.vols" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aeroport">
+              <PropertyRef Name="Id_aero" />
+            </Principal>
+            <Dependent Role="vols">
+              <PropertyRef Name="id_aero_arri" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vols_aeroport_dep">
+          <End Role="aeroport" Type="Self.aeroport" Multiplicity="0..1" />
+          <End Role="vols" Type="Self.vols" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aeroport">
+              <PropertyRef Name="Id_aero" />
+            </Principal>
+            <Dependent Role="vols">
+              <PropertyRef Name="id_aero_dep" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vols_avion">
+          <End Role="avion" Type="Self.avion" Multiplicity="0..1" />
+          <End Role="vols" Type="Self.vols" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="avion">
+              <PropertyRef Name="Id_avion" />
+            </Principal>
+            <Dependent Role="vols">
+              <PropertyRef Name="id_avion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_vols_user">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="vols" Type="Self.vols" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id_user" />
+            </Principal>
+            <Dependent Role="vols">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="flyapp_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="aeroport" EntityType="Self.aeroport" />
+          <EntitySet Name="avion" EntityType="Self.avion" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="vols" EntityType="Self.vols" />
+          <AssociationSet Name="FK_vols_aeroport_arri" Association="Self.FK_vols_aeroport_arri">
+            <End Role="aeroport" EntitySet="aeroport" />
+            <End Role="vols" EntitySet="vols" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vols_aeroport_dep" Association="Self.FK_vols_aeroport_dep">
+            <End Role="aeroport" EntitySet="aeroport" />
+            <End Role="vols" EntitySet="vols" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vols_avion" Association="Self.FK_vols_avion">
+            <End Role="avion" EntitySet="avion" />
+            <End Role="vols" EntitySet="vols" />
+          </AssociationSet>
+          <AssociationSet Name="FK_vols_user" Association="Self.FK_vols_user">
+            <End Role="User" EntitySet="User" />
+            <End Role="vols" EntitySet="vols" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="flyapp_DBModelStoreContainer" CdmEntityContainer="flyapp_DBEntities">
+          <EntitySetMapping Name="aeroport">
+            <EntityTypeMapping TypeName="flyapp_DBModel.aeroport">
+              <MappingFragment StoreEntitySet="aeroport">
+                <ScalarProperty Name="Id_aero" ColumnName="Id_aero" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="latitude" ColumnName="latitude" />
+                <ScalarProperty Name="latideg" ColumnName="latideg" />
+                <ScalarProperty Name="latidirection" ColumnName="latidirection" />
+                <ScalarProperty Name="longtitude" ColumnName="longtitude" />
+                <ScalarProperty Name="longdeg" ColumnName="longdeg" />
+                <ScalarProperty Name="longdirection" ColumnName="longdirection" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="avion">
+            <EntityTypeMapping TypeName="flyapp_DBModel.avion">
+              <MappingFragment StoreEntitySet="avion">
+                <ScalarProperty Name="Id_avion" ColumnName="Id_avion" />
+                <ScalarProperty Name="consommation" ColumnName="consommation" />
+                <ScalarProperty Name="quantite_kero" ColumnName="quantite_kero" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="flyapp_DBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id_user" ColumnName="Id_user" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="cin" ColumnName="cin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vols">
+            <EntityTypeMapping TypeName="flyapp_DBModel.vols">
+              <MappingFragment StoreEntitySet="vols">
+                <ScalarProperty Name="Id_vols" ColumnName="Id_vols" />
+                <ScalarProperty Name="id_avion" ColumnName="id_avion" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="id_aero_dep" ColumnName="id_aero_dep" />
+                <ScalarProperty Name="id_aero_arri" ColumnName="id_aero_arri" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
